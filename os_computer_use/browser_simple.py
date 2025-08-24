@@ -36,9 +36,13 @@ class Browser:
         # Try to open in system browser instead of pywebview
         try:
             # First try to open with the default browser
-            webbrowser.open(url)
-            print("Opened VNC client in system browser")
-            self.is_running = True
+            success = webbrowser.open(url)
+            if success:
+                print("Opened VNC client in system browser")
+                self.is_running = True
+            else:
+                print("System browser failed to open URL")
+                raise RuntimeError("webbrowser.open() returned False")
         except Exception as e:
             print(f"Failed to open in system browser: {e}")
             
